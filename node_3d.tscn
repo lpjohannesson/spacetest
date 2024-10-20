@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://c27cgcyaofu7t"]
+
+[ext_resource type="PackedScene" uid="uid://bsouyj08va5ln" path="res://player.tscn" id="1_3w77d"]
+[ext_resource type="Script" path="res://bodies.gd" id="1_lgyof"]
+[ext_resource type="PackedScene" uid="uid://rasl5kwosk7f" path="res://test_cube.tscn" id="3_5qul1"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_b0m6i"]
+
+[sub_resource type="Sky" id="Sky_8ckm2"]
+sky_material = SubResource("PhysicalSkyMaterial_b0m6i")
+
+[sub_resource type="Environment" id="Environment_mg1a8"]
+background_mode = 2
+sky = SubResource("Sky_8ckm2")
+ambient_light_source = 2
+ambient_light_color = Color(0.201527, 0.201527, 0.201527, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
+
+[node name="Bodies" type="Node3D" parent="."]
+script = ExtResource("1_lgyof")
+test_cube_scene = ExtResource("3_5qul1")
+
+[node name="Player" parent="Bodies" instance=ExtResource("1_3w77d")]
+transform = Transform3D(-0.106246, 0, 0.99434, 0, 1, 0, -0.99434, 0, -0.106246, 31.6101, 0, 2.93057)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 16.0
+shadow_blur = 0.0
+omni_range = 5000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mg1a8")

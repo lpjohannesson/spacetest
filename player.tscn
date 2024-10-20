@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsouyj08va5ln"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_p54cb"]
+[ext_resource type="Texture2D" uid="uid://bqcvpi0db155r" path="res://plus-lg.svg" id="2_dc1u7"]
+[ext_resource type="PackedScene" uid="uid://c3qwke7me1h7f" path="res://bullet.tscn" id="3_3yd2k"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cqjj6"]
+bounce = 0.2
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wrpo6"]
+points = PackedVector3Array(-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0, 0, 0, -2)
+
+[node name="Player" type="RigidBody3D"]
+mass = 0.2
+physics_material_override = SubResource("PhysicsMaterial_cqjj6")
+script = ExtResource("1_p54cb")
+bullet_scene = ExtResource("3_3yd2k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+shape = SubResource("ConvexPolygonShape3D_wrpo6")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Plus-lg" type="Sprite2D" parent="CanvasLayer"]
+texture = ExtResource("2_dc1u7")
+
+[node name="Camera2D" type="Camera2D" parent="CanvasLayer"]

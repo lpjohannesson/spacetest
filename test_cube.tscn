@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://rasl5kwosk7f"]
+
+[ext_resource type="Script" path="res://test_cube.gd" id="1_uelxn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hj6ol"]
+bounce = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_almyt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3onjm"]
+albedo_color = Color(1, 0.380392, 0.380392, 1)
+emission = Color(1, 0.580392, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h614t"]
+
+[node name="TestCube" type="RigidBody3D" node_paths=PackedStringArray("mesh")]
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_hj6ol")
+script = ExtResource("1_uelxn")
+mesh = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_almyt")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3onjm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_h614t")
