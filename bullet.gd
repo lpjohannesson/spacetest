@@ -9,6 +9,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		return
 	
 	if body is RigidBody3D:
-		body.apply_impulse(velocity * 0.02, body.to_local(global_position))
+		body.apply_impulse(velocity * 0.01, body.to_local(global_position))
 	
 	queue_free()

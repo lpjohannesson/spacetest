@@ -21,5 +21,8 @@ func _physics_process(delta: float) -> void:
 		var to_body = global_position - body.global_position
 		var distance = to_body.length()
 		
+		if distance == 0.0:
+			continue
+		
 		body.apply_central_force(
 			to_body / (distance * distance) * 0.1)

@@ -1,7 +1,17 @@
 extends RigidBody3D
 class_name Player
 
-@export var bullet_scene: PackedScene
+@export var bullet_cast: RayCast3D
+
+func shoot_bullet(quat: Quaternion) -> void:
+	var collider := bullet_cast.get_collider()
+	
+	if not collider is RigidBody3D:
+		return
+	
+	collider.apply_impulse(
+		quat * Vector3.FORWARD,
+		collider.to_local(bullet_cast.get_collision_point()))
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -21,13 +31,12 @@ func _process(delta: float) -> void:
 		Input.get_axis("aim_right", "aim_left"),
 		Input.get_axis("turn_right", "turn_left")) * 0.5)
 	
+	if Input.is_action_pressed("brake"):
+		linear_velocity *= pow(0.08, delta)
+		angular_velocity *= pow(0.08, delta)
+	
 	if Input.is_action_just_pressed("shoot"):
-		var bullet: Bullet = bullet_scene.instantiate()
-		get_node("../..").add_child(bullet)
-		
-		bullet.global_position = global_position
-		bullet.rotation = rotation
-		bullet.velocity = linear_velocity + quat * Vector3.FORWARD * 100.0
+		shoot_bullet(quat)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
